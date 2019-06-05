@@ -12,6 +12,7 @@
         ("melpa"        . 0)))
 
 (package-initialize)
+(server-start)
 
 ;; Bootstrap `use-package`
 (unless (package-installed-p 'use-package)
@@ -37,7 +38,6 @@
 ;;save auto-save files in one directory
 (setq backup-directory-alist
       `(("." . ,(concat user-emacs-directory "backups"))))
-
 
 
 ;; code folding using hideShow
@@ -96,7 +96,24 @@
 
 ;;highlights the current cursor line
 ;;(global-hl-line-mode t)
-;;smart-tabs 
+;;smart-tabs
+
+(use-package inf-ruby
+  :ensure t
+  :config
+  (autoload 'inf-ruby-minor-mode "inf-ruby" "Run an inferior Ruby process" t)
+  (add-hook 'ruby-mode-hook 'inf-ruby-minor-mode)
+  )
+
+
+(use-package ruby-electric
+ :ensure t
+ :init
+ (add-hook 'ruby-mode-hook '(lambda () (ruby-electric-mode t)))
+ :config
+ (setq ruby-electric-expand-delimiters-list nil)
+)
+
 (use-package smart-tabs-mode
   :ensure t
   :init
@@ -118,7 +135,7 @@
 ;;source code pro font
 (set-face-attribute 'default nil
                     :family "Source Code Pro"
-                    :height 130
+                    :height 90
                     :weight 'normal
                     :width 'normal)
 
@@ -369,6 +386,13 @@
 (add-to-list 'load-path "~/.emacs.d/emacs-ycmd")
 (require 'ycmd)
 (add-hook 'c++-mode-hook 'ycmd-mode)
+
+;;ruby seeing-is-believing
+(use-package seeing-is-believing
+  :ensure t
+  :config (add-hook 'ruby-mode-hook 'seeing-is-believing)
+  )
+
 
 ;;search navigation SWIPER
 (use-package counsel

@@ -1,0 +1,20 @@
+# Source nix if it's installed
+if [ -r ~/.nix-profile/etc/profile.d/nix.sh ]; then
+  . ~/.nix-profile/etc/profile.d/nix.sh
+fi
+
+# Check for a readable environment file, source it if present
+if [ -r /d/environment ]; then
+  . /d/environment
+else
+  echo "Environment file missing, please contact a team member for assistance."
+fi
+
+export LS_OPTIONS='--color=auto'
+eval "$(dircolors -b)"
+alias ls='ls $LS_OPTIONS'
+export PS1="\[\033[38;5;184m\]\u@\H\[$(tput sgr0)\]\[\033[38;5;15m\]:\W\\$ \[$(tput sgr0)\]"
+alias ec="emacsclient --create-frame --alternate-editor=\"\""
+alias l="ls"
+setxkbmap -option caps:swapcontrol
+
