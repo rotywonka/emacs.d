@@ -1,0 +1,385 @@
+;; Object semanticdb-project-database-file
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "semanticdb-project-database-file"
+  :tables
+  (list
+    (semanticdb-table "semanticdb-table"
+      :major-mode c++-mode
+      :tags 
+        '( ("RealCache.h" include nil nil [20 42])
+            ("Globals.h" include nil nil [43 63])
+            ("cache" type
+               (:members 
+                  ( ("RealCache" function
+                       (:constructor-flag t
+                        :parent "RealCache"
+                        :arguments 
+                          ( ("cache_size" variable
+                               (:constant-flag t
+                                :type ("uint64_t" type (:type "class") nil nil))
+                                (reparse-symbol arg-sub-list) [105 131])
+                            ("prefetch" variable
+                               (:reference 1
+                                :type ("MutexVector" type
+                                     (:template-specifier 
+                                        ( ("Element" type nil nil nil))                                        
+                                      :type "class")
+                                      nil nil))
+                                (reparse-symbol arg-sub-list) [132 164])
+                            ("lru" variable
+                               (:reference 1
+                                :type ("std::vector" type
+                                     (:template-specifier 
+                                        ( ("uint64_t" type nil nil nil))                                        
+                                      :type "class")
+                                      nil nil))
+                                (reparse-symbol arg-sub-list) [165 192]))                          
+                        :type ("RealCache" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [84 463])
+                    ("merge" function
+                       (:parent "RealCache"
+                        :type "void")
+                        (reparse-symbol namespacesubparts) [470 5183]))                  
+                :type "namespace")
+                nil [65 5189]))          
+      :file "RealCache.cc"
+      :pointmax 5209
+      :fsize 5216
+      :lastmodtime '(23467 61601 559383 245000)
+      :unmatched-syntax nil)
+    (semanticdb-table "semanticdb-table"
+      :major-mode c++-mode
+      :tags 
+        '( ("REAL_CACHE_H" variable (:constant-flag t) nil [30 42])
+            ("vector" include (:system-flag t) nil [58 75])
+            ("cstdint" include (:system-flag t) nil [76 94])
+            ("set" include (:system-flag t) nil [95 109])
+            ("map" include (:system-flag t) nil [110 124])
+            ("algorithm" include (:system-flag t) nil [125 145])
+            ("Element.h" include nil nil [165 185])
+            ("mutex" include (:system-flag t) nil [186 202])
+            ("cache" type
+               (:members 
+                  ( ("ObjectID" variable
+                       (:default-value "uint64_t"
+                        :type "int")
+                        (reparse-symbol namespacesubparts) [227 247])
+                    ("MutexVector" type
+                       (:template 
+                          ( ("T" type (:type "class") nil nil))                          
+                        :type "struct"
+                        :members 
+                          ( ("elements" variable (:type ("std::vector" type
+                                 (:template-specifier 
+                                    ( ("T" type nil nil nil))                                    
+                                  :type "class")
+                                  nil nil)) (reparse-symbol classsubparts) [295 319])
+                            ("mutex" variable (:type ("std::mutex" type (:type "class") nil nil)) (reparse-symbol classsubparts) [322 339]))                          )
+                        (reparse-symbol namespacesubparts) [249 343])
+                    ("RealCache" type
+                       (:members 
+                          ( ("public" label nil (reparse-symbol classsubparts) [364 371])
+                            ("RealCache" function
+                               (:prototype-flag t
+                                :constructor-flag t
+                                :arguments 
+                                  ( ("cache_size" variable
+                                       (:constant-flag t
+                                        :type ("uint64_t" type (:type "class") nil nil))
+                                        (reparse-symbol arg-sub-list) [384 410])
+                                    ("prefetch" variable
+                                       (:reference 1
+                                        :type ("MutexVector" type
+                                             (:template-specifier 
+                                                ( ("Element" type nil nil nil))                                                
+                                              :type "class")
+                                              nil nil))
+                                        (reparse-symbol arg-sub-list) [411 442])
+                                    ("lru" variable
+                                       (:reference 1
+                                        :type ("std::vector" type
+                                             (:template-specifier 
+                                                ( ("uint64_t" type nil nil nil))                                                
+                                              :type "class")
+                                              nil nil))
+                                        (reparse-symbol arg-sub-list) [443 470]))                                  
+                                :type ("RealCache" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [374 471])
+                            ("merge" function
+                               (:prototype-flag t
+                                :type "void")
+                                (reparse-symbol classsubparts) [474 487])
+                            ("insert_on_demand" function
+                               (:prototype-flag t
+                                :type "void")
+                                (reparse-symbol classsubparts) [490 514])
+                            ("get_belief" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("id" variable (:type ("ObjectID" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [537 549]))                                  
+                                :type ("uint64_t" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [517 550])
+                            ("private" label nil (reparse-symbol classsubparts) [556 564])
+                            ("cache_store_" variable (:type ("std::vector" type
+                                 (:template-specifier 
+                                    ( ("Element" type nil nil nil))                                    
+                                  :type "class")
+                                  nil nil)) (reparse-symbol classsubparts) [568 602])
+                            ("cache_size_r" variable (:type ("uint64_t" type (:type "class") nil nil)) (reparse-symbol classsubparts) [605 627])
+                            ("prefetch_" variable (:type ("MutexVector" type
+                                 (:template-specifier 
+                                    ( ("Element" type nil nil nil))                                    
+                                  :type "class")
+                                  nil nil)) (reparse-symbol classsubparts) [636 668])
+                            ("prefetch_ids_" variable (:type ("std::vector" type
+                                 (:template-specifier 
+                                    ( ("uint64_t" type nil nil nil))                                    
+                                  :type "class")
+                                  nil nil)) (reparse-symbol classsubparts) [677 713])
+                            ("evict_ids_" variable (:type ("std::vector" type
+                                 (:template-specifier 
+                                    ( ("uint64_t" type nil nil nil))                                    
+                                  :type "class")
+                                  nil nil)) (reparse-symbol classsubparts) [722 755])
+                            ("unused_" variable (:type ("uint64_t" type (:type "class") nil nil)) (reparse-symbol classsubparts) [764 781])
+                            ("insertions_" variable (:type ("uint64_t" type (:type "class") nil nil)) (reparse-symbol classsubparts) [790 811])
+                            ("usage_histogram_" variable (:type ("std::map" type
+                                 (:template-specifier 
+                                    ( ("uint64_t" type nil nil nil)
+                                      ("uint64_t" type nil nil nil))                                    
+                                  :type "class")
+                                  nil nil)) (reparse-symbol classsubparts) [820 866])
+                            ("lru_cache_" variable (:type ("std::vector" type
+                                 (:template-specifier 
+                                    ( ("uint64_t" type nil nil nil))                                    
+                                  :type "class")
+                                  nil nil)) (reparse-symbol classsubparts) [875 909]))                          
+                        :type "class")
+                        (reparse-symbol namespacesubparts) [345 913]))                  
+                :type "namespace")
+                nil [203 922]))          
+      :file "RealCache.h"
+      :pointmax 949
+      :fsize 948
+      :lastmodtime '(23467 61597 276952 114000)
+      :unmatched-syntax nil
+      :lexical-table 
+        '(("REAL_CACHE_H")
+          )
+)
+    (semanticdb-table "semanticdb-table"
+      :major-mode c++-mode
+      :tags 
+        '( ("GLOBALS_H" variable (:constant-flag t) nil [27 36])
+            ("unordered_map" include (:system-flag t) nil [37 61])
+            ("string" include (:system-flag t) nil [62 79])
+            ("queue" include (:system-flag t) nil [80 96])
+            ("vector" include (:system-flag t) nil [97 114])
+            ("cstdint" include (:system-flag t) nil [115 133])
+            ("std" using (:type ("std" type
+                 (:prototype t
+                  :type "namespace")
+                  nil nil)) nil [134 154])
+            ("Globals" type
+               (:members 
+                  ( ("MISS_TIME" variable
+                       (:typemodifiers ("extern")
+                        :type "double")
+                        (reparse-symbol namespacesubparts) [208 232])
+                    ("ARRIVAL_TIME" variable
+                       (:typemodifiers ("extern")
+                        :type "double")
+                        (reparse-symbol namespacesubparts) [262 289])
+                    ("KEEP_FULL_HISTORY" variable
+                       (:typemodifiers ("extern")
+                        :type "bool")
+                        (reparse-symbol namespacesubparts) [291 321])
+                    ("WORKLOAD_FILE_PATH" variable
+                       (:typemodifiers ("extern")
+                        :type ("string" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [323 356])
+                    ("STRESS_RESULTS_FILE" variable
+                       (:typemodifiers ("extern")
+                        :type ("string" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [358 392])
+                    ("TRAIN" variable
+                       (:typemodifiers ("extern")
+                        :type ("uint64_t" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [427 449])
+                    ("TEST_START" variable
+                       (:typemodifiers ("extern")
+                        :type ("uint64_t" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [451 478])
+                    ("TEST_SIZE" variable
+                       (:typemodifiers ("extern")
+                        :type ("uint64_t" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [480 506])
+                    ("DRYRUN" variable
+                       (:typemodifiers ("extern")
+                        :type "bool")
+                        (reparse-symbol namespacesubparts) [541 560])
+                    ("LRU" variable
+                       (:typemodifiers ("extern")
+                        :type "bool")
+                        (reparse-symbol namespacesubparts) [562 578])
+                    ("LRU_REAL_CACHE" variable
+                       (:typemodifiers ("extern")
+                        :type ("priority_queue" type
+                             (:template-specifier 
+                                ( ("uint64_t" type nil nil nil))                                
+                              :type "class")
+                              nil nil))
+                        (reparse-symbol namespacesubparts) [580 627])
+                    ("METADATA" variable
+                       (:typemodifiers ("extern")
+                        :type "bool")
+                        (reparse-symbol namespacesubparts) [629 650])
+                    ("METADATA_SAVING" variable
+                       (:typemodifiers ("extern")
+                        :type ("uint64_t" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [652 684])
+                    ("DEBUG" variable
+                       (:typemodifiers ("extern")
+                        :type "bool")
+                        (reparse-symbol namespacesubparts) [686 704])
+                    ("STRESS_TEST" variable
+                       (:typemodifiers ("extern")
+                        :type "bool")
+                        (reparse-symbol namespacesubparts) [706 730])
+                    ("ACCESS_INDEX" variable
+                       (:typemodifiers ("extern")
+                        :type ("uint64_t" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [737 766])
+                    ("belief" type
+                       (:typedef ("unordered_map" type
+                             (:template-specifier 
+                                ( ("uint64_t" type nil nil nil)
+                                  ("double" type nil nil nil))                                
+                              :type "class")
+                              nil nil)
+                        :type "typedef")
+                        (reparse-symbol namespacesubparts) [768 815])
+                    ("BELIEF" variable
+                       (:typemodifiers ("extern")
+                        :type ("belief" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [817 838])
+                    ("CACHE_FLAG" variable
+                       (:typemodifiers ("extern")
+                        :type ("uint64_t" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [859 886])
+                    ("CC_FLAG" variable
+                       (:typemodifiers ("extern")
+                        :type ("uint64_t" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [888 912])
+                    ("REAL_HIT_RATE" variable
+                       (:typemodifiers ("extern")
+                        :type ("uint64_t" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [920 950])
+                    ("REAL_USED_RATIO" variable
+                       (:typemodifiers ("extern")
+                        :type ("uint64_t" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [952 984])
+                    ("REAL_INSERTION_COUNT" variable
+                       (:typemodifiers ("extern")
+                        :type ("uint64_t" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [986 1023])
+                    ("METADATA_FOOTPRINT" variable
+                       (:typemodifiers ("extern")
+                        :type ("uint64_t" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [1025 1060])
+                    ("T_REAL" variable
+                       (:typemodifiers ("extern")
+                        :type "double")
+                        (reparse-symbol namespacesubparts) [1062 1083])
+                    ("T_VIRT" variable
+                       (:typemodifiers ("extern")
+                        :type "double")
+                        (reparse-symbol namespacesubparts) [1085 1106])
+                    ("SIMULATION_SIZE" variable
+                       (:typemodifiers ("extern")
+                        :type ("uint64_t" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [1109 1141])
+                    ("CACHE_SIZE" variable
+                       (:typemodifiers ("extern")
+                        :constant-flag t
+                        :type ("uint64_t" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [1144 1177])
+                    ("VCACHE_SIZE" variable
+                       (:typemodifiers ("extern")
+                        :constant-flag t
+                        :type ("uint64_t" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [1179 1213])
+                    ("CC_SIZE" variable
+                       (:typemodifiers ("extern")
+                        :constant-flag t
+                        :type ("uint64_t" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [1215 1245])
+                    ("THRESH" variable
+                       (:typemodifiers ("extern")
+                        :constant-flag t
+                        :type "float")
+                        (reparse-symbol namespacesubparts) [1247 1273])
+                    ("VOTER_SIZE" variable
+                       (:typemodifiers ("extern")
+                        :constant-flag t
+                        :type ("uint64_t" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [1275 1308])
+                    ("WINDOW_SIZE" variable
+                       (:typemodifiers ("extern")
+                        :constant-flag t
+                        :type ("uint64_t" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [1310 1344]))                  
+                :type "namespace")
+                nil [155 1346]))          
+      :file "Globals.h"
+      :pointmax 1388
+      :fsize 1352
+      :lastmodtime '(23466 34068 922479 218000)
+      :unmatched-syntax nil
+      :lexical-table 
+        '(("GLOBALS_H")
+          )
+)
+    (semanticdb-table "semanticdb-table"
+      :major-mode c++-mode
+      :tags 
+        '( ("ELEMENT_H" variable (:constant-flag t) nil [27 36])
+            ("vector" include (:system-flag t) nil [37 54])
+            ("cstdint" include (:system-flag t) nil [55 73])
+            ("cache" type
+               (:members 
+                  ( ("Element" type
+                       (:members 
+                          ( ("Element" function
+                               (:constructor-flag t
+                                :arguments 
+                                  ( ("id" variable (:type ("uint64_t" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [124 136])
+                                    ("belief" variable (:type "double") (reparse-symbol arg-sub-list) [137 151]))                                  
+                                :type ("Element" type (:type "struct") nil nil))
+                                (reparse-symbol classsubparts) [116 189])
+                            ("id" variable (:type ("uint64_t" type (:type "class") nil nil)) (reparse-symbol classsubparts) [195 207])
+                            ("belief" variable (:type "double") (reparse-symbol classsubparts) [212 226])
+                            ("hits" variable
+                               (:default-value "0"
+                                :type ("uint64_t" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [231 249])
+                            ("pinned" variable
+                               (:default-value "false"
+                                :type "bool")
+                                (reparse-symbol classsubparts) [254 274]))                          
+                        :type "struct")
+                        (reparse-symbol namespacesubparts) [95 279]))                  
+                :type "namespace")
+                nil [75 281]))          
+      :file "Element.h"
+      :pointmax 290
+      :fsize 289
+      :lastmodtime '(23466 34049 147152 34000)
+      :unmatched-syntax nil
+      :lexical-table 
+        '(("ELEMENT_H")
+          )
+))
+  :file "!Users!tommytan!Desktop!BeliefCache!C++Codes!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

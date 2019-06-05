@@ -1,0 +1,429 @@
+;; Object semanticdb-project-database-file
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "semanticdb-project-database-file"
+  :tables
+  (list
+    (semanticdb-table "semanticdb-table"
+      :major-mode c++-mode
+      :tags 
+        '( ("EventQueue.h" include nil nil [1 24])
+            ("Globs" type
+               (:members 
+                  ( ("i" variable
+                       (:default-value "0"
+                        :type "int")
+                        (reparse-symbol namespacesubparts) [44 54])
+                    ("disk_size" variable
+                       (:default-value "0"
+                        :type "int")
+                        (reparse-symbol namespacesubparts) [56 74])
+                    ("cpu_size" variable
+                       (:default-value "0"
+                        :type "int")
+                        (reparse-symbol namespacesubparts) [76 93])
+                    ("disk_1_time" variable
+                       (:default-value "0"
+                        :type "float")
+                        (reparse-symbol namespacesubparts) [95 117])
+                    ("disk_2_time" variable
+                       (:default-value "0"
+                        :type "float")
+                        (reparse-symbol namespacesubparts) [119 141])
+                    ("disk_1_util_time" variable
+                       (:default-value "0"
+                        :type "float")
+                        (reparse-symbol namespacesubparts) [143 170])
+                    ("disk_2_util_time" variable
+                       (:default-value "0"
+                        :type "float")
+                        (reparse-symbol namespacesubparts) [172 199])
+                    ("cpu_util_time" variable
+                       (:default-value "0"
+                        :type "float")
+                        (reparse-symbol namespacesubparts) [201 225])
+                    ("cpu_time" variable
+                       (:default-value "0"
+                        :type "float")
+                        (reparse-symbol namespacesubparts) [227 246])
+                    ("disk1_counter" variable
+                       (:default-value "0"
+                        :type "int")
+                        (reparse-symbol namespacesubparts) [248 270])
+                    ("disk2_counter" variable
+                       (:default-value "0"
+                        :type "int")
+                        (reparse-symbol namespacesubparts) [272 294])
+                    ("cpu_counter" variable
+                       (:default-value "0"
+                        :type "int")
+                        (reparse-symbol namespacesubparts) [296 316])
+                    ("CPU_" function
+                       (:prototype-flag t
+                        :type ("queue::Queue" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [318 342])
+                    ("Disk1_" function
+                       (:prototype-flag t
+                        :type ("queue::Queue" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [344 370])
+                    ("Disk2_" function
+                       (:prototype-flag t
+                        :type ("queue::Queue" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [372 398]))                  
+                :type "namespace")
+                nil [26 402])
+            ("outs" type
+               (:members 
+                  ( ("log_output" function
+                       (:prototype-flag t
+                        :type ("std::ofstream" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [424 467]))                  
+                :type "namespace")
+                nil [404 469])
+            ("queue" type
+               (:members 
+                  ( ("EventQueue" function
+                       (:constructor-flag t
+                        :parent "EventQueue"
+                        :arguments 
+                          ( ("seed" variable
+                               (:constant-flag t
+                                :type "float")
+                                (reparse-symbol arg-sub-list) [512 529])
+                            ("init" variable
+                               (:constant-flag t
+                                :type "int")
+                                (reparse-symbol arg-sub-list) [530 545])
+                            ("fin" variable
+                               (:constant-flag t
+                                :type "int")
+                                (reparse-symbol arg-sub-list) [546 560])
+                            ("arrive_min" variable
+                               (:constant-flag t
+                                :type "float")
+                                (reparse-symbol arg-sub-list) [561 584])
+                            ("arrive_max" variable
+                               (:constant-flag t
+                                :type "float")
+                                (reparse-symbol arg-sub-list) [585 608])
+                            ("quit_prob" variable
+                               (:constant-flag t
+                                :type "float")
+                                (reparse-symbol arg-sub-list) [609 631])
+                            ("cpu_min" variable
+                               (:constant-flag t
+                                :type "float")
+                                (reparse-symbol arg-sub-list) [632 652])
+                            ("cpu_max" variable
+                               (:constant-flag t
+                                :type "float")
+                                (reparse-symbol arg-sub-list) [653 673])
+                            ("disk1_min" variable
+                               (:constant-flag t
+                                :type "float")
+                                (reparse-symbol arg-sub-list) [674 696])
+                            ("disk1_max" variable
+                               (:constant-flag t
+                                :type "float")
+                                (reparse-symbol arg-sub-list) [697 719])
+                            ("disk2_min" variable
+                               (:constant-flag t
+                                :type "float")
+                                (reparse-symbol arg-sub-list) [720 742])
+                            ("disk2_max" variable
+                               (:constant-flag t
+                                :type "float")
+                                (reparse-symbol arg-sub-list) [743 765]))                          
+                        :type ("EventQueue" type (:type "class") nil nil))
+                        (reparse-symbol namespacesubparts) [489 1402])
+                    ("simulation" function
+                       (:parent "EventQueue"
+                        :type "void")
+                        (reparse-symbol namespacesubparts) [1404 6277])
+                    ("insertDisk" function
+                       (:parent "EventQueue"
+                        :arguments 
+                          ( ("job" variable (:type ("std::vector" type
+                                 (:template-specifier 
+                                    ( ("Job" type nil nil nil))                                    
+                                  :type "class")
+                                  nil nil)) (reparse-symbol arg-sub-list) [6407 6428])
+                            ("i" variable
+                               (:reference 1
+                                :type "int")
+                                (reparse-symbol arg-sub-list) [6429 6437])
+                            ("event_time" variable (:type "float") (reparse-symbol arg-sub-list) [6438 6455]))                          
+                        :type "void")
+                        (reparse-symbol namespacesubparts) [6379 9336])
+                    ("insertCPU" function
+                       (:parent "EventQueue"
+                        :arguments 
+                          ( ("types" variable (:type "int") (reparse-symbol arg-sub-list) [9401 9411])
+                            ("event_time" variable (:type "float") (reparse-symbol arg-sub-list) [9412 9429]))                          
+                        :type "void")
+                        (reparse-symbol namespacesubparts) [9374 10730])
+                    ("freeMem" function
+                       (:parent "EventQueue"
+                        :type "void")
+                        (reparse-symbol namespacesubparts) [10733 10914])
+                    ("processEvent" function
+                       (:parent "EventQueue"
+                        :arguments 
+                          ( ("type" variable (:type ("Event" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [10946 10957]))                          
+                        :type "void")
+                        (reparse-symbol namespacesubparts) [10916 12924])
+                    ("insertJobs" function
+                       (:parent "EventQueue"
+                        :arguments 
+                          ( ("time" variable (:type "float") (reparse-symbol arg-sub-list) [12954 12965]))                          
+                        :type "void")
+                        (reparse-symbol namespacesubparts) [12926 13050])
+                    ("updateGlobal" function
+                       (:parent "EventQueue"
+                        :arguments 
+                          ( ("i" variable
+                               (:reference 1
+                                :type "int")
+                                (reparse-symbol arg-sub-list) [13083 13091]))                          
+                        :type "void")
+                        (reparse-symbol namespacesubparts) [13053 13110]))                  
+                :type "namespace")
+                nil [471 13112]))          
+      :file "EventQueue.cc"
+      :pointmax 13136
+      :fsize 13135
+      :lastmodtime '(23459 52445 530744 374000)
+      :unmatched-syntax '((string 449 . 465) (number 392 . 396) (number 364 . 368) (number 336 . 340)))
+    (semanticdb-table "semanticdb-table"
+      :major-mode c++-mode
+      :tags 
+        '( ("EVENT_QUEUE_H" variable (:constant-flag t) nil [31 44])
+            ("CPU_FINISHED" variable (:constant-flag t) nil [54 66])
+            ("DISK_1_FINISHED" variable (:constant-flag t) nil [77 92])
+            ("DISK_2_FINISHED" variable (:constant-flag t) nil [103 118])
+            ("JOB_EVENT" variable (:constant-flag t) nil [129 138])
+            ("SIMULATION_FINISHED" variable (:constant-flag t) nil [149 168])
+            ("JOBS_SIZE" variable (:constant-flag t) nil [179 188])
+            ("PRIORITY_QUEUE_SIZE" variable (:constant-flag t) nil [202 221])
+            ("Queue.h" include nil nil [244 262])
+            ("string" include (:system-flag t) nil [278 295])
+            ("time.h" include (:system-flag t) nil [296 313])
+            ("iostream" include (:system-flag t) nil [314 333])
+            ("algorithm" include (:system-flag t) nil [334 354])
+            ("vector" include (:system-flag t) nil [355 372])
+            ("random" include (:system-flag t) nil [373 390])
+            ("iomanip" include (:system-flag t) nil [391 409])
+            ("fstream" include (:system-flag t) nil [410 428])
+            ("queue" type
+               (:members 
+                  ( ("std::string" variable (:type "int") (reparse-symbol namespacesubparts) [465 477])
+                    ("Event" type
+                       (:members 
+                          ( ("Event" function
+                               (:constructor-flag t
+                                :arguments 
+                                  ( ("time" variable (:type "float") (reparse-symbol arg-sub-list) [501 512]))                                  
+                                :type ("Event" type (:type "struct") nil nil))
+                                (reparse-symbol classsubparts) [495 536])
+                            ("event_time" variable (:type "float") (reparse-symbol classsubparts) [539 556])
+                            ("event" variable (:type ("Event_s" type (:type "class") nil nil)) (reparse-symbol classsubparts) [559 573])
+                            ("job_id" variable (:type "int") (reparse-symbol classsubparts) [576 587])
+                            ("types" variable (:type "int") (reparse-symbol classsubparts) [590 600]))                          
+                        :type "struct")
+                        (reparse-symbol namespacesubparts) [479 604])
+                    ("EventQueue" type
+                       (:members 
+                          ( ("public" label nil (reparse-symbol classsubparts) [625 632])
+                            ("EventQueue" function
+                               (:prototype-flag t
+                                :constructor-flag t
+                                :arguments 
+                                  ( ("seed" variable
+                                       (:constant-flag t
+                                        :type "float")
+                                        (reparse-symbol arg-sub-list) [690 707])
+                                    ("init" variable
+                                       (:constant-flag t
+                                        :type "int")
+                                        (reparse-symbol arg-sub-list) [708 723])
+                                    ("fin" variable
+                                       (:constant-flag t
+                                        :type "int")
+                                        (reparse-symbol arg-sub-list) [724 738])
+                                    ("arrive_min" variable
+                                       (:constant-flag t
+                                        :type "float")
+                                        (reparse-symbol arg-sub-list) [739 762])
+                                    ("arrive_max" variable
+                                       (:constant-flag t
+                                        :type "float")
+                                        (reparse-symbol arg-sub-list) [765 788])
+                                    ("quit_prob" variable
+                                       (:constant-flag t
+                                        :type "float")
+                                        (reparse-symbol arg-sub-list) [789 811])
+                                    ("cpu_min" variable
+                                       (:constant-flag t
+                                        :type "float")
+                                        (reparse-symbol arg-sub-list) [812 832])
+                                    ("cpu_max" variable
+                                       (:constant-flag t
+                                        :type "float")
+                                        (reparse-symbol arg-sub-list) [835 855])
+                                    ("disk1_min" variable
+                                       (:constant-flag t
+                                        :type "float")
+                                        (reparse-symbol arg-sub-list) [856 878])
+                                    ("disk1_max" variable
+                                       (:constant-flag t
+                                        :type "float")
+                                        (reparse-symbol arg-sub-list) [879 901])
+                                    ("disk2_min" variable
+                                       (:constant-flag t
+                                        :type "float")
+                                        (reparse-symbol arg-sub-list) [904 926])
+                                    ("disk2_max" variable
+                                       (:constant-flag t
+                                        :type "float")
+                                        (reparse-symbol arg-sub-list) [927 949]))                                  
+                                :type ("EventQueue" type (:type "class") nil nil))
+                                (reparse-symbol classsubparts) [676 950])
+                            ("simulation" function
+                               (:prototype-flag t
+                                :type "void")
+                                (reparse-symbol classsubparts) [953 971])
+                            ("insertDisk" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("job" variable (:type ("std::vector" type
+                                         (:template-specifier 
+                                            ( ("Job" type nil nil nil))                                            
+                                          :type "class")
+                                          nil nil)) (reparse-symbol arg-sub-list) [993 1014])
+                                    ("i" variable
+                                       (:reference 1
+                                        :type "int")
+                                        (reparse-symbol arg-sub-list) [1015 1023])
+                                    ("event_time" variable (:type "float") (reparse-symbol arg-sub-list) [1024 1041]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [977 1042])
+                            ("updateGlobal" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("i" variable
+                                       (:reference 1
+                                        :type "int")
+                                        (reparse-symbol arg-sub-list) [1063 1071]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [1045 1072])
+                            ("processEvent" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("type" variable (:type ("Event" type (:type "class") nil nil)) (reparse-symbol arg-sub-list) [1093 1104]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [1075 1105])
+                            ("insertJobs" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("time" variable (:type "float") (reparse-symbol arg-sub-list) [1124 1135]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [1108 1136])
+                            ("insertCPU" function
+                               (:prototype-flag t
+                                :arguments 
+                                  ( ("types" variable (:type "int") (reparse-symbol arg-sub-list) [1157 1167])
+                                    ("event_time" variable (:type "float") (reparse-symbol arg-sub-list) [1168 1185]))                                  
+                                :type "void")
+                                (reparse-symbol classsubparts) [1142 1186])
+                            ("freeMem" function
+                               (:prototype-flag t
+                                :type "void")
+                                (reparse-symbol classsubparts) [1189 1204])
+                            ("private" label nil (reparse-symbol classsubparts) [1206 1214])
+                            ("seed_" variable
+                               (:constant-flag t
+                                :type "float")
+                                (reparse-symbol classsubparts) [1248 1367])
+                            ("init_" variable
+                               (:constant-flag t
+                                :type "float")
+                                (reparse-symbol classsubparts) [1248 1367])
+                            ("arrive_min_" variable
+                               (:constant-flag t
+                                :type "float")
+                                (reparse-symbol classsubparts) [1248 1367])
+                            ("arrive_max_" variable
+                               (:constant-flag t
+                                :type "float")
+                                (reparse-symbol classsubparts) [1248 1367])
+                            ("cpu_min_" variable
+                               (:constant-flag t
+                                :type "float")
+                                (reparse-symbol classsubparts) [1248 1367])
+                            ("cpu_max_" variable
+                               (:constant-flag t
+                                :type "float")
+                                (reparse-symbol classsubparts) [1248 1367])
+                            ("disk1_min_" variable
+                               (:constant-flag t
+                                :type "float")
+                                (reparse-symbol classsubparts) [1248 1367])
+                            ("disk1_max_" variable
+                               (:constant-flag t
+                                :type "float")
+                                (reparse-symbol classsubparts) [1248 1367])
+                            ("disk2_min_" variable
+                               (:constant-flag t
+                                :type "float")
+                                (reparse-symbol classsubparts) [1248 1367])
+                            ("disk2_max_" variable
+                               (:constant-flag t
+                                :type "float")
+                                (reparse-symbol classsubparts) [1248 1367])
+                            ("quit_prob_" variable (:type "float") (reparse-symbol classsubparts) [1370 1387])
+                            ("fin_" variable (:type "float") (reparse-symbol classsubparts) [1390 1401])
+                            ("start_time_" variable (:type "float") (reparse-symbol classsubparts) [1404 1422])
+                            ("end_time_" variable (:type "float") (reparse-symbol classsubparts) [1425 1441])
+                            ("current_time_" variable (:type "float") (reparse-symbol classsubparts) [1444 1464])
+                            ("Event_vec_" variable (:type ("std::vector" type
+                                 (:template-specifier 
+                                    ( ("Event" type nil nil nil))                                    
+                                  :type "class")
+                                  nil nil)) (reparse-symbol classsubparts) [1467 1497])
+                            ("random_arrival_" variable (:type "float") (reparse-symbol classsubparts) [1500 1522])
+                            ("quit_jobs_" variable (:type ("std::vector" type
+                                 (:template-specifier 
+                                    ( ("Node" type (:pointer 1) nil nil))                                    
+                                  :type "class")
+                                  nil nil)) (reparse-symbol classsubparts) [1525 1555])
+                            ("job_vector_" variable (:type ("std::vector" type
+                                 (:template-specifier 
+                                    ( ("Job" type nil nil nil))                                    
+                                  :type "class")
+                                  nil nil)) (reparse-symbol classsubparts) [1558 1587]))                          
+                        :type "class")
+                        (reparse-symbol namespacesubparts) [606 1592]))                  
+                :type "namespace")
+                nil [431 1598]))          
+      :file "EventQueue.h"
+      :pointmax 1649
+      :fsize 1648
+      :lastmodtime '(23459 6102 950771 515000)
+      :unmatched-syntax nil
+      :lexical-table 
+        '(("JOB_EVENT" . ((number "4" 139 . 140)))
+          ("PRIORITY_QUEUE_SIZE" . ((number "50" 222 . 224)))
+          ("CPU_FINISHED" . ((number "1" 67 . 68)))
+          ("EVENT_QUEUE_H")
+          ("SIMULATION_FINISHED" . ((number "5" 169 . 170)))
+          ("DISK_1_FINISHED" . ((number "2" 93 . 94)))
+          ("DISK_2_FINISHED" . ((number "3" 119 . 120)))
+          ("JOBS_SIZE" . ((number "1000" 189 . 193)))
+          )
+)
+    (semanticdb-table "semanticdb-table"
+      :file "Queue.h"
+      :fsize 432
+      :lastmodtime '(23457 13262 954528 536000)))
+  :file "!Users!tommytan!Desktop!3207notes!Discrete_event_sim!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

@@ -1,0 +1,348 @@
+;; Object semanticdb-project-database-file
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "semanticdb-project-database-file"
+  :tables
+  (list
+    (semanticdb-table "semanticdb-table"
+      :major-mode python-mode
+      :tags 
+        '( ("threading" include nil nil [1 50])
+            ("sys" include nil nil [1 50])
+            ("time" include nil nil [1 50])
+            ("logging" include nil nil [1 50])
+            ("getopt" include nil nil [1 50])
+            ("csv" include nil nil [1 50])
+            ("numpy" include nil nil [51 69])
+            ("HIT_TIME" variable nil nil [108 125])
+            ("MISS_TIME" variable nil nil [126 144])
+            ("ARRIVAL_TIME" variable nil nil [173 195])
+            ("KEEP_FULL_HISTORY" variable nil nil [196 220])
+            ("WORKLOAD_FILE_PATH" variable nil nil [264 318])
+            ("STRESS_RESULTS_FILE" variable nil nil [319 360])
+            ("MAX_NUM_FILES" variable nil nil [361 391])
+            ("TRAIN" variable nil nil [392 405])
+            ("TEST_START" variable nil nil [406 424])
+            ("TEST_SIZE" variable nil nil [425 443])
+            ("SIMULATION_SIZE" variable nil nil [444 463])
+            ("DRYRUN" variable nil nil [464 478])
+            ("LRU" variable nil nil [479 490])
+            ("LRU_REAL_CACHE" variable nil nil [491 510])
+            ("METADATA" variable nil nil [511 527])
+            ("METADATA_SAVING" variable nil nil [528 549])
+            ("DEBUG" variable nil nil [550 563])
+            ("STRESS_TEST" variable nil nil [564 583])
+            ("ACCESS_INDEX" variable nil nil [585 601])
+            ("BELIEF" variable nil nil [602 613])
+            ("PREFETCH" variable nil nil [614 627])
+            ("CACHE_FLAG" variable nil nil [628 642])
+            ("CC_FLAG" variable nil nil [643 654])
+            ("REAL_HIT_RATE" variable nil nil [656 673])
+            ("REAL_USED_RATIO" variable nil nil [674 693])
+            ("REAL_INSERTION_COUNT" variable nil nil [694 718])
+            ("METADATA_FOOTPRINT" variable nil nil [719 741])
+            ("T_REAL" variable nil nil [742 754])
+            ("T_VIRT" variable nil nil [755 767])
+            ("PRINT_LOCK" variable nil nil [769 798])
+            ("LOCK" variable nil nil [799 822])
+            ("COND_LOCK" variable nil nil [823 851])
+            ("COND" variable nil nil [852 889])
+            ("simLogger" variable nil nil [891 933])
+            ("virtLogger" variable nil nil [934 977])
+            ("realLogger" variable nil nil [978 1021])
+            ("help" function nil nil [1064 3145])
+            ("config_sim_log" function nil nil [3189 3541])
+            ("config_cache_log" function nil nil [3598 4300])
+            ("Constants" type
+               (:superclasses ("object")
+                :members 
+                  ( ("CACHE_SIZE" variable nil (reparse-symbol indented_block_body) [4388 4407])
+                    ("VCACHE_SIZE" variable nil (reparse-symbol indented_block_body) [4412 4430])
+                    ("CC_SIZE" variable nil (reparse-symbol indented_block_body) [4435 4447])
+                    ("MOST" variable nil (reparse-symbol indented_block_body) [4452 4470])
+                    ("THRESH" variable nil (reparse-symbol indented_block_body) [4475 4488])
+                    ("VOTER_SIZE" variable nil (reparse-symbol indented_block_body) [4493 4507])
+                    ("WINDOW_SIZE" variable nil (reparse-symbol indented_block_body) [4512 4527]))                  
+                :type "class")
+                nil [4359 4528])
+            ("Stat" type
+               (:superclasses ("object")
+                :members 
+                  ( ("__init__" function
+                       (:suite 
+                          ( ("self" variable nil (reparse-symbol indented_block_body) [4690 4720])
+                            ("self" variable nil (reparse-symbol indented_block_body) [4795 4808])
+                            ("self" variable nil (reparse-symbol indented_block_body) [4863 4879])
+                            ("self" variable nil (reparse-symbol indented_block_body) [4919 4942])
+                            ("self" variable nil (reparse-symbol indented_block_body) [4979 4998])
+                            ("self" variable nil (reparse-symbol indented_block_body) [5040 5066])
+                            ("self" variable nil (reparse-symbol indented_block_body) [5104 5123])
+                            ("self" variable nil (reparse-symbol indented_block_body) [5162 5188]))                          
+                        :parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [4658 4662])
+                            ("warmup_tick" variable nil (reparse-symbol function_parameters) [4664 4675]))                          
+                        :constructor-flag t)
+                        (reparse-symbol indented_block_body) [4645 5237])
+                    ("reset_stat" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [5294 5298]))                          )
+                        (reparse-symbol indented_block_body) [5279 5382])
+                    ("inc_hit" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [5444 5448]))                          )
+                        (reparse-symbol indented_block_body) [5432 5625])
+                    ("inc_miss" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [5689 5693]))                          )
+                        (reparse-symbol indented_block_body) [5676 5882])
+                    ("add_unused" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [5958 5962])
+                            ("num_used" variable nil (reparse-symbol function_parameters) [5964 5972]))                          )
+                        (reparse-symbol indented_block_body) [5943 6134]))                  
+                :type "class")
+                nil [4567 6134])
+            ("Element" type
+               (:superclasses ("object")
+                :members 
+                  ( ("__init__" function
+                       (:suite 
+                          ( ("self" variable nil (reparse-symbol indented_block_body) [6334 6356])
+                            ("self" variable nil (reparse-symbol indented_block_body) [6380 6394])
+                            ("self" variable nil (reparse-symbol indented_block_body) [6421 6434])
+                            ("self" variable nil (reparse-symbol indented_block_body) [6463 6482]))                          
+                        :parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [6305 6309])
+                            ("elem_id" variable nil (reparse-symbol function_parameters) [6311 6318])
+                            ("sig" variable nil (reparse-symbol function_parameters) [6320 6323]))                          
+                        :constructor-flag t)
+                        (reparse-symbol indented_block_body) [6292 6532])
+                    ("hit" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [6600 6604]))                          )
+                        (reparse-symbol indented_block_body) [6592 6641])
+                    ("copy" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [6723 6727]))                          )
+                        (reparse-symbol indented_block_body) [6714 6818])
+                    ("pin_element" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [6879 6883]))                          )
+                        (reparse-symbol indented_block_body) [6863 6913])
+                    ("unpin_element" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [6978 6982]))                          )
+                        (reparse-symbol indented_block_body) [6960 7013]))                  
+                :type "class")
+                nil [6190 7013])
+            ("Cache" type
+               (:superclasses ("object")
+                :members 
+                  ( ("__init__" function
+                       (:suite 
+                          ( ("self" variable nil (reparse-symbol indented_block_body) [7166 7182])
+                            ("self" variable nil (reparse-symbol indented_block_body) [7233 7261])
+                            ("self" variable nil (reparse-symbol indented_block_body) [7291 7312])
+                            ("self" variable nil (reparse-symbol indented_block_body) [7335 7359])
+                            ("self" code nil (reparse-symbol indented_block_body) [7387 7429]))                          
+                        :parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [7139 7143])
+                            ("cache_size" variable nil (reparse-symbol function_parameters) [7145 7155]))                          
+                        :constructor-flag t)
+                        (reparse-symbol indented_block_body) [7126 7537])
+                    ("reset_stat" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [7604 7608]))                          )
+                        (reparse-symbol indented_block_body) [7589 7755])
+                    ("hit" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [7821 7825])
+                            ("obj" variable nil (reparse-symbol function_parameters) [7827 7830]))                          )
+                        (reparse-symbol indented_block_body) [7813 8106])
+                    ("pin_element" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [8167 8171])
+                            ("obj" variable nil (reparse-symbol function_parameters) [8173 8176]))                          )
+                        (reparse-symbol indented_block_body) [8151 8328])
+                    ("unpin_element" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [8393 8397])
+                            ("obj" variable nil (reparse-symbol function_parameters) [8399 8402]))                          )
+                        (reparse-symbol indented_block_body) [8375 8556]))                  
+                :type "class")
+                nil [7057 8556])
+            ("VirtCache" type
+               (:superclasses ("Cache")
+                :members 
+                  ( ("__init__" function
+                       (:suite 
+                          ( ("super" code nil (reparse-symbol indented_block_body) [8761 8789]))                          
+                        :parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [8734 8738])
+                            ("cache_size" variable nil (reparse-symbol function_parameters) [8740 8750]))                          
+                        :constructor-flag t)
+                        (reparse-symbol indented_block_body) [8721 8790])
+                    ("merge" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [8860 8864])
+                            ("cc_guess" variable nil (reparse-symbol function_parameters) [8866 8874]))                          )
+                        (reparse-symbol indented_block_body) [8850 10490])
+                    ("get_sig" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [10558 10562])
+                            ("obj" variable nil (reparse-symbol function_parameters) [10564 10567]))                          )
+                        (reparse-symbol indented_block_body) [10546 10611]))                  
+                :type "class")
+                nil [8627 10611])
+            ("RealCache" type
+               (:superclasses ("Cache")
+                :members 
+                  ( ("__init__" function
+                       (:suite 
+                          ( ("super" code nil (reparse-symbol indented_block_body) [10804 10832]))                          
+                        :parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [10777 10781])
+                            ("cache_size" variable nil (reparse-symbol function_parameters) [10783 10793]))                          
+                        :constructor-flag t)
+                        (reparse-symbol indented_block_body) [10764 10833])
+                    ("merge" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [10966 10970]))                          )
+                        (reparse-symbol indented_block_body) [10956 13697])
+                    ("insert_ondemand" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [13809 13813])
+                            ("obj" variable nil (reparse-symbol function_parameters) [13815 13818])
+                            ("sig" variable nil (reparse-symbol function_parameters) [13820 13823]))                          )
+                        (reparse-symbol indented_block_body) [13789 14726])
+                    ("get_sig" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [14794 14798])
+                            ("obj" variable nil (reparse-symbol function_parameters) [14800 14803]))                          )
+                        (reparse-symbol indented_block_body) [14782 14847]))                  
+                :type "class")
+                nil [10670 14847])
+            ("VirtStat" type
+               (:superclasses ("object")
+                :members 
+                  ( ("__init__" function
+                       (:suite 
+                          ( ("self" variable nil (reparse-symbol indented_block_body) [15125 15140])
+                            ("self" variable nil (reparse-symbol indented_block_body) [15196 15213])
+                            ("self" variable nil (reparse-symbol indented_block_body) [15261 15278])
+                            ("self" variable nil (reparse-symbol indented_block_body) [15329 15353])
+                            ("if" code nil (reparse-symbol indented_block_body) [15406 15688]))                          
+                        :parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [15100 15104])
+                            ("max_elem" variable nil (reparse-symbol function_parameters) [15106 15114]))                          
+                        :constructor-flag t)
+                        (reparse-symbol indented_block_body) [15087 15688])
+                    ("get_main_key" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [15758 15762])
+                            ("key" variable nil (reparse-symbol function_parameters) [15764 15767]))                          )
+                        (reparse-symbol indented_block_body) [15741 15820])
+                    ("get_index" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [15884 15888])
+                            ("key" variable nil (reparse-symbol function_parameters) [15890 15893]))                          )
+                        (reparse-symbol indented_block_body) [15870 15951])
+                    ("fill_hash" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [16028 16032])
+                            ("index" variable nil (reparse-symbol function_parameters) [16034 16039]))                          )
+                        (reparse-symbol indented_block_body) [16014 16099])
+                    ("hasher" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [16164 16168])
+                            ("obj" variable nil (reparse-symbol function_parameters) [16170 16173])
+                            ("index" variable nil (reparse-symbol function_parameters) [16175 16180]))                          )
+                        (reparse-symbol indented_block_body) [16153 16242])
+                    ("update_rec" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [16344 16348])
+                            ("obj" variable nil (reparse-symbol function_parameters) [16350 16353]))                          )
+                        (reparse-symbol indented_block_body) [16329 17815])
+                    ("update_counts" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [17917 17921])
+                            ("obj" variable nil (reparse-symbol function_parameters) [17923 17926])
+                            ("next_obj" variable nil (reparse-symbol function_parameters) [17928 17936]))                          )
+                        (reparse-symbol indented_block_body) [17899 18249])
+                    ("calculate_sig" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [18314 18318])
+                            ("accesses" variable nil (reparse-symbol function_parameters) [18320 18328])
+                            ("belief" variable nil (reparse-symbol function_parameters) [18330 18336])
+                            ("prob" variable nil (reparse-symbol function_parameters) [18338 18342]))                          )
+                        (reparse-symbol indented_block_body) [18296 18908])
+                    ("get_cc" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [18973 18977])
+                            ("obj" variable nil (reparse-symbol function_parameters) [18979 18982])
+                            ("vCache" variable nil (reparse-symbol function_parameters) [18984 18990])
+                            ("prob" variable nil (reparse-symbol function_parameters) [18992 18996])
+                            ("ccSize" variable nil (reparse-symbol function_parameters) [18998 19004]))                          )
+                        (reparse-symbol indented_block_body) [18962 19435])
+                    ("get_best_guess" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [19499 19503])
+                            ("accesses" variable nil (reparse-symbol function_parameters) [19505 19513])
+                            ("elements" variable nil (reparse-symbol function_parameters) [19515 19523])
+                            ("prob" variable nil (reparse-symbol function_parameters) [19525 19529])
+                            ("flag" variable nil (reparse-symbol function_parameters) [19531 19535])
+                            ("threshold" variable nil (reparse-symbol function_parameters) [19537 19546]))                          )
+                        (reparse-symbol indented_block_body) [19480 19863])
+                    ("get_sig_value" function
+                       (:parent "dummy"
+                        :arguments 
+                          ( ("self" variable nil (reparse-symbol function_parameters) [19931 19935])
+                            ("obj" variable nil (reparse-symbol function_parameters) [19937 19940])
+                            ("next_obj" variable nil (reparse-symbol function_parameters) [19942 19950]))                          )
+                        (reparse-symbol indented_block_body) [19913 20016]))                  
+                :type "class")
+                nil [14976 20016])
+            ("virtRun" function (:arguments 
+              ( ("ticks" variable nil (reparse-symbol function_parameters) [20079 20084]))              ) nil [20067 27926])
+            ("realRun" function (:arguments 
+              ( ("ticks" variable nil (reparse-symbol function_parameters) [27979 27984]))              ) nil [27967 32532])
+            ("if" code nil nil [32554 37825]))          
+      :file "BC_simulator.py"
+      :pointmax 37825
+      :fsize 37824
+      :lastmodtime '(23430 61522 967131 711000)
+      :unmatched-syntax nil))
+  :file "!Users!tommytan!Desktop!BeliefCache!semantic.cache"
+  :semantic-tag-version "2.0"
+  :semanticdb-version "2.2")

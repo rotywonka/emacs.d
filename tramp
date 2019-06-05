@@ -1,0 +1,8 @@
+;; -*- emacs-lisp -*- <19/03/08 23:56:03 /Users/tommytan/.emacs.d/tramp>
+;; Tramp connection history.  Don't change this file.
+;; You can delete it, forcing Tramp to reapply the checks.
+
+(((tramp-file-name "ssh" "tuf60598" nil "cis-kant04" nil nil nil)
+  nil)
+ ((tramp-file-name "ssh" "tuf60598" nil "cis-linux2.temple.edu" nil nil nil)
+  nil))

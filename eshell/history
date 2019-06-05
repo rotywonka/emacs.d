@@ -1,0 +1,11 @@
+lsl
+ls
+cd prog/prince/
+ls
+git status
+cd ..
+cd ..
+ls
+cd Box/Temple\ University/Senior/Mosaics\ 2/
+ls
+exit
