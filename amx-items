@@ -1,0 +1,60 @@
+
+;; ----- amx-history -----
+(
+ whitespace-mode
+ lsp-restart-workspace
+ xref-find-references
+ lsp-find-references
+ column-number-mode
+ goto-line
+ query-replace
+ rename-file
+ electric-indent-mode
+ kill-emacs
+ projectile-find-tag
+ new-frame
+ kill-rectangle
+ package-refresh-contents
+ ediff
+ set-variable
+ emacs-version
+ magit-status
+ rectangle-mark-mode
+ customize-face
+)
+
+;; ----- amx-data -----
+(
+ (describe-key . 2)
+ (treemacs . 3)
+ (set-face-foreground . 2)
+ (server-start . 3)
+ (server-force-delete . 1)
+ (project-find-file . 1)
+ (visual-line-mode . 2)
+ (highlight-indentation-mode . 4)
+ (mc/mark-next-like-this . 1)
+ (projectile-switch-project . 1)
+ (indent-region . 1)
+ (query-replace . 25)
+ (kill-emacs . 6)
+ (customize-face . 1)
+ (set-variable . 28)
+ (rectangle-mark-mode . 1)
+ (magit-status . 2)
+ (treemacs-refresh . 1)
+ (lsp-restart-workspace . 30)
+ (emacs-version . 1)
+ (ediff . 1)
+ (package-refresh-contents . 1)
+ (kill-rectangle . 2)
+ (column-number-mode . 4)
+ (new-frame . 1)
+ (projectile-find-tag . 3)
+ (electric-indent-mode . 1)
+ (rename-file . 2)
+ (goto-line . 1)
+ (lsp-find-references . 1)
+ (xref-find-references . 1)
+ (whitespace-mode . 4)
+)

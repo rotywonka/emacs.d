@@ -1,0 +1,841 @@
+* Organizes all of my configurations and tweaks in Org-mode
+* Interface Tweaks
+#+BEGIN_SRC emacs-lisp
+
+;; start emacsclient with focus from CLI
+(add-hook 'server-switch-hook (lambda () (select-frame-set-input-focus (selected-frame))))
+
+;; delete selection if you insert a text
+(use-package delsel
+  :ensure nil
+  :hook (after-init . delete-selection-mode))
+
+;; display line numbers // also tweaks the colors
+(global-display-line-numbers-mode)
+(set-face-attribute 'line-number-current-line nil
+                    :foreground "green")
+(set-face-attribute 'line-number nil
+                      :foreground "green")
+
+
+;; hopefully this fixes the connection issue
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+
+;; tells emacs where to find anaconda environments
+;(setenv "WORKON_HOME" "/Users/tommy.tan/anaconda3/envs")
+;(require 'pyvenv)
+;(pyvenv-mode 1)
+
+;; set default font to SF mono
+(add-to-list 'default-frame-alist '(font . "SF Mono-14" ))
+(set-face-attribute 'default t :font "SF Mono-14" )
+
+;; always install all packages with use-packages
+(setq use-package-always-ensure t)
+
+;; disable scroll bars on new frames
+(add-to-list 'default-frame-alist
+             '(vertical-scroll-bars . nil))
+
+(fset 'yes-or-no-p 'y-or-n-p)
+
+;; disable startup message
+(setq inhibit-startup-message t)
+
+;; disable splash screen on startup
+(setq inhibit-splash-screen t)
+
+;; disable tool bar on the top
+(tool-bar-mode -1)
+
+;; force option key to be Emacs' meta key
+(setq mac-option-modifier 'meta)
+
+;; always insert spaces, do not insert tabs
+(setq-default indent-tabs-mode nil)
+
+;; set default tab width to 4
+(setq-default tab-width 4)
+
+;; hopefully it fixes the scrolling on macOS
+(setq redisplay-dont-pause t
+  scroll-margin 1
+  scroll-step 1
+  scroll-conservatively 10000
+  scroll-preserve-screen-position 1)
+
+#+END_SRC
+
+* Speed up start time
+#+BEGIN_SRC emacs-lisp
+;; Speed up startup
+(defvar centaur-gc-cons-threshold (if (display-graphic-p) 16000000 1600000)
+  "The default value to use for `gc-cons-threshold'. If you experience freezing,
+decrease this. If you experience stuttering, increase this.")
+
+(defvar centaur-gc-cons-upper-limit (if (display-graphic-p) 400000000 100000000)
+  "The temporary value for `gc-cons-threshold' to defer it.")
+
+(defvar centaur-gc-timer (run-with-idle-timer 10 t #'garbage-collect)
+  "Run garbarge collection when idle 10s.")
+
+(defvar default-file-name-handler-alist file-name-handler-alist)
+
+(setq file-name-handler-alist nil)
+(setq gc-cons-threshold centaur-gc-cons-upper-limit)
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            "Restore defalut values after startup."
+            (setq file-name-handler-alist default-file-name-handler-alist)
+            (setq gc-cons-threshold centaur-gc-cons-threshold)
+
+            ;; GC automatically while unfocusing the frame
+            ;; `focus-out-hook' is obsolete since 27.1
+            (if (boundp 'after-focus-change-function)
+                (add-function :after after-focus-change-function
+                  (lambda ()
+                    (unless (frame-focus-state)
+                      (garbage-collect))))
+              (add-hook 'focus-out-hook 'garbage-collect))
+
+            ;; Avoid GCs while using `ivy'/`counsel'/`swiper' and `helm', etc.
+            ;; @see http://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-threshold/
+            (defun my-minibuffer-setup-hook ()
+              (setq gc-cons-threshold centaur-gc-cons-upper-limit))
+
+            (defun my-minibuffer-exit-hook ()
+              (setq gc-cons-threshold centaur-gc-cons-threshold))
+
+            (add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
+            (add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)))
+
+;; Load path
+;; Optimize: Force "lisp"" and "site-lisp" at the head to reduce the startup time.
+(defun update-load-path (&rest _)
+  "Update `load-path'."
+  (push (expand-file-name "site-lisp" user-emacs-directory) load-path)
+  (push (expand-file-name "lisp" user-emacs-directory) load-path))
+
+(defun add-subdirs-to-load-path (&rest _)
+  "Add subdirectories to `load-path'."
+  (let ((default-directory
+          (expand-file-name "site-lisp" user-emacs-directory)))
+    (normal-top-level-add-subdirs-to-load-path)))
+
+(advice-add #'package-initialize :after #'update-load-path)
+(advice-add #'package-initialize :after #'add-subdirs-to-load-path)
+(update-load-path)
+
+#+END_SRC
+* Keybinding configurations
+#+BEGIN_SRC emacs-lisp
+(setq mac-option-modifier 'meta
+      mac-command-modifier 'super)
+(bind-keys     ([(super a)] . mark-whole-buffer)
+               ([(super c)] . kill-ring-save)
+               ([(super l)] . goto-line)
+               ([(super q)] . save-buffers-kill-emacs)
+               ([(super s)] . save-buffer)
+               ([(super v)] . yank)
+               ([(super w)] . delete-frame)
+               ([(super z)] . undo))
+
+;; forward/backward word keybind command
+(global-set-key (kbd "M-h") 'backward-word)
+(global-set-key (kbd "M-l") 'forward-word)
+(global-set-key (kbd "M-j") 'scroll-down-command)
+(global-set-key (kbd "M-k") 'scroll-up-command)
+
+;; set key for C-S-s for isearch
+(global-set-key (kbd "C-S-s") 'isearch-forward-symbol-at-point)
+
+;; undo command
+(global-set-key (kbd "C-z") 'undo)
+
+#+END_SRC
+* Packages
+** org-bullets
+   #+BEGIN_SRC emacs-lisp
+;; org-mode stuff
+(use-package org-bullets
+	:config (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+)
+   #+END_SRC 
+** color-theme-sanityinc-tomorrow
+   #+BEGIN_SRC emacs-lisp
+(use-package color-theme-sanityinc-tomorrow 
+:config 
+(color-theme-sanityinc-tomorrow--define-theme night))
+   #+END_SRC
+
+** lsp-python-ms
+   #+BEGIN_SRC emacs-lisp
+(use-package lsp-python-ms
+  :config
+  (defun lsp-set-cfg ()
+    (let ((lsp-cfg `(:pyls (:configurationSources ("flake8")))))
+      (lsp--set-configuration lsp-cfg)))
+  (add-hook 'lsp-after-initialize-hook 'lsp-set-cfg)
+  :hook (python-mode . (lambda ()
+                          (require 'lsp-python-ms)
+                          (lsp))))  
+   #+END_SRC
+** ivy
+   #+BEGIN_SRC emacs-lisp
+
+ (use-package counsel
+   :diminish ivy-mode counsel-mode
+   :bind (("C-s"   . swiper-isearch)
+          ("C-r"   . swiper-isearch-backward)
+          ("s-f"   . swiper)
+
+          ("C-c C-r" . ivy-resume)
+          ("C-c v p" . ivy-push-view)
+          ("C-c v o" . ivy-pop-view)
+          ("C-c v ." . ivy-switch-view)
+
+          :map counsel-mode-map
+          ([remap swiper] . counsel-grep-or-swiper)
+          ([remap swiper-backward] . counsel-grep-or-swiper-backward)
+          ([remap dired] . counsel-dired)
+          ([remap set-variable] . counsel-set-variable)
+          ([remap insert-char] . counsel-unicode-char)
+          ([remap recentf-open-files] . counsel-recentf)
+
+          ("C-x j"   . counsel-mark-ring)
+          ("C-h F"   . counsel-faces)
+
+          ("C-c B" . counsel-bookmarked-directory)
+          ("C-c L" . counsel-load-library)
+          ("C-c O" . counsel-find-file-extern)
+          ("C-c P" . counsel-package)
+          ("C-c R" . counsel-list-processes)
+          ("C-c f" . counsel-find-library)
+          ("C-c g" . counsel-grep)
+          ("C-c h" . counsel-command-history)
+          ("C-c i" . counsel-git)
+          ("C-c j" . counsel-git-grep)
+          ("C-c o" . counsel-outline)
+          ("C-c r" . counsel-rg)
+          ("C-c z" . counsel-fzf)
+
+          ("C-c c B" . counsel-bookmarked-directory)
+          ("C-c c F" . counsel-faces)
+          ("C-c c L" . counsel-load-library)
+          ("C-c c O" . counsel-find-file-extern)
+          ("C-c c P" . counsel-package)
+          ("C-c c R" . counsel-list-processes)
+          ("C-c c a" . counsel-apropos)
+          ("C-c c e" . counsel-colors-emacs)
+          ("C-c c f" . counsel-find-library)
+          ("C-c c g" . counsel-grep)
+          ("C-c c h" . counsel-command-history)
+          ("C-c c i" . counsel-git)
+          ("C-c c j" . counsel-git-grep)
+          ("C-c c l" . counsel-locate)
+          ("C-c c m" . counsel-minibuffer-history)
+          ("C-c c o" . counsel-outline)
+          ("C-c c p" . counsel-pt)
+          ("C-c c r" . counsel-rg)
+          ("C-c c s" . counsel-ag)
+          ("C-c c t" . counsel-load-theme)
+          ("C-c c u" . counsel-unicode-char)
+          ("C-c c w" . counsel-colors-web)
+          ("C-c c v" . counsel-set-variable)
+          ("C-c c z" . counsel-fzf)
+
+          :map ivy-minibuffer-map
+          ("C-w" . ivy-yank-word)
+          ("C-`" . ivy-avy)
+
+          :map counsel-find-file-map
+          ("C-h" . counsel-up-directory)
+
+          :map swiper-map
+          ("M-s" . swiper-isearch-toggle)
+          ("M-%" . swiper-query-replace)
+
+          :map isearch-mode-map
+          ("M-s" . swiper-isearch-toggle))
+   :hook ((after-init . ivy-mode)
+          (ivy-mode . counsel-mode))
+   :init
+   (setq enable-recursive-minibuffers t) ; Allow commands in minibuffers
+
+   (setq ivy-use-selectable-prompt t
+         ivy-use-virtual-buffers t    ; Enable bookmarks and recentf
+         ivy-height 10
+         ivy-fixed-height-minibuffer t
+         ivy-count-format "(%d/%d) "
+         ivy-on-del-error-function nil
+         ivy-initial-inputs-alist nil)
+
+   (setq swiper-action-recenter t)
+
+   (setq counsel-find-file-at-point t
+         counsel-yank-pop-separator "\n────────\n")
+
+   (defconst sys/macp
+       (eq system-type 'darwin)
+       "Are we running on a Mac system?")
+
+   ;; Use the faster search tool: ripgrep (`rg')
+   (when (executable-find "rg")
+     (setq counsel-grep-base-command "rg -S --no-heading --line-number --color never %s %s")
+     (when (and sys/macp (executable-find "gls"))
+       (setq counsel-find-file-occur-use-find nil
+             counsel-find-file-occur-cmd
+             "gls -a | grep -i -E '%s' | tr '\\n' '\\0' | xargs -0 gls -d --group-directories-first")))
+   :config
+   (with-no-warnings
+     ;; Display an arrow with the selected item
+     (defun my-ivy-format-function-arrow (cands)
+       "Transform CANDS into a string for minibuffer."
+       (ivy--format-function-generic
+        (lambda (str)
+          (concat (if (icons-displayable-p)
+                      (all-the-icons-octicon "chevron-right" :height 0.8 :v-adjust -0.05)
+                    ">")
+                  (propertize " " 'display `(space :align-to 2))
+                  (ivy--add-face str 'ivy-current-match)))
+        (lambda (str)
+          (concat (propertize " " 'display `(space :align-to 2)) str))
+        cands
+        "\n"))
+     ;; (setf (alist-get 't ivy-format-functions-alist) #'my-ivy-format-function-arrow)
+
+     ;; Pre-fill search keywords
+     ;; @see https://www.reddit.com/r/emacs/comments/b7g1px/withemacs_execute_commands_like_marty_mcfly/
+     (defvar my-ivy-fly-commands
+       '(query-replace-regexp
+         flush-lines keep-lines ivy-read
+         swiper swiper-backward swiper-all
+         swiper-isearch swiper-isearch-backward
+         lsp-ivy-workspace-symbol lsp-ivy-global-workspace-symbol
+         counsel-grep-or-swiper counsel-grep-or-swiper-backward
+         counsel-grep counsel-ack counsel-ag counsel-rg counsel-pt))
+     (defvar-local my-ivy-fly--travel nil)
+
+     (defun my-ivy-fly-back-to-present ()
+       (cond ((and (memq last-command my-ivy-fly-commands)
+                   (equal (this-command-keys-vector) (kbd "M-p")))
+              ;; repeat one time to get straight to the first history item
+              (setq unread-command-events
+                    (append unread-command-events
+                            (listify-key-sequence (kbd "M-p")))))
+             ((or (memq this-command '(self-insert-command
+                                       ivy-forward-char
+                                       ivy-delete-char delete-forward-char
+                                       end-of-line mwim-end-of-line
+                                       mwim-end-of-code-or-line mwim-end-of-line-or-code
+                                       yank ivy-yank-word counsel-yank-pop))
+                  (equal (this-command-keys-vector) (kbd "M-n")))
+              (unless my-ivy-fly--travel
+                (delete-region (point) (point-max))
+                (when (memq this-command '(ivy-forward-char
+                                           ivy-delete-char delete-forward-char
+                                           end-of-line mwim-end-of-line
+                                           mwim-end-of-code-or-line
+                                           mwim-end-of-line-or-code))
+                  (insert (ivy-cleanup-string ivy-text))
+                  (when (memq this-command '(ivy-delete-char delete-forward-char))
+                    (beginning-of-line)))
+                (setq my-ivy-fly--travel t)))))
+
+     (defun my-ivy-fly-time-travel ()
+       (when (memq this-command my-ivy-fly-commands)
+         (let* ((kbd (kbd "M-n"))
+                (cmd (key-binding kbd))
+                (future (and cmd
+                             (with-temp-buffer
+                               (when (ignore-errors
+                                       (call-interactively cmd) t)
+                                 (buffer-string))))))
+           (when future
+             (save-excursion
+               (insert (propertize (replace-regexp-in-string
+                                    "\\\\_<" ""
+                                    (replace-regexp-in-string
+                                     "\\\\_>" ""
+                                     future))
+                                   'face 'shadow)))
+             (add-hook 'pre-command-hook 'my-ivy-fly-back-to-present nil t)))))
+
+     (add-hook 'minibuffer-setup-hook #'my-ivy-fly-time-travel)
+     (add-hook 'minibuffer-exit-hook
+               (lambda ()
+                 (remove-hook 'pre-command-hook 'my-ivy-fly-back-to-present t)))
+
+     ;;
+     ;; Improve search experience of `swiper' and `counsel'
+     ;;
+     (defun my-ivy-switch-to-swiper (&rest _)
+       "Switch to `swiper' with the current input."
+       (swiper ivy-text))
+
+     (defun my-ivy-switch-to-swiper-isearch (&rest _)
+       "Switch to `swiper-isearch' with the current input."
+       (swiper-isearch ivy-text))
+
+     (defun my-ivy-switch-to-swiper-all (&rest _)
+       "Switch to `swiper-all' with the current input."
+       (swiper-all ivy-text))
+
+     (defun my-ivy-switch-to-rg-dwim (&rest _)
+       "Switch to `rg-dwim' with the current input."
+       (rg-dwim default-directory))
+
+     (defun my-ivy-switch-to-counsel-rg (&rest _)
+       "Switch to `counsel-rg' with the current input."
+       (counsel-rg ivy-text default-directory))
+
+     (defun my-ivy-switch-to-counsel-git-grep (&rest _)
+       "Switch to `counsel-git-grep' with the current input."
+       (counsel-git-grep ivy-text default-directory))
+
+     (defun my-ivy-switch-to-counsel-find-file (&rest _)
+       "Switch to `counsel-find-file' with the current input."
+       (counsel-find-file ivy-text))
+
+     (defun my-ivy-switch-to-counsel-fzf (&rest _)
+       "Switch to `counsel-fzf' with the current input."
+       (counsel-fzf ivy-text default-directory))
+
+     (defun my-ivy-switch-to-counsel-git (&rest _)
+       "Switch to `counsel-git' with the current input."
+       (counsel-git ivy-text))
+
+     ;; @see https://emacs-china.org/t/swiper-swiper-isearch/9007/12
+     (defun my-swiper-toggle-counsel-rg ()
+       "Toggle `counsel-rg' and `swiper'/`swiper-isearch' with the current input."
+       (interactive)
+       (ivy-quit-and-run
+         (if (memq (ivy-state-caller ivy-last) '(swiper swiper-isearch))
+             (my-ivy-switch-to-counsel-rg)
+           (my-ivy-switch-to-swiper-isearch))))
+     (bind-key "<C-return>" #'my-swiper-toggle-counsel-rg swiper-map)
+     (bind-key "<C-return>" #'my-swiper-toggle-counsel-rg counsel-ag-map)
+
+     (with-eval-after-load 'rg
+       (defun my-swiper-toggle-rg-dwim ()
+         "Toggle `rg-dwim' with the current input."
+         (interactive)
+         (ivy-quit-and-run
+           (rg-dwim default-directory)))
+       (bind-key "<M-return>" #'my-swiper-toggle-rg-dwim swiper-map)
+       (bind-key "<M-return>" #'my-swiper-toggle-rg-dwim counsel-ag-map))
+
+     (defun my-swiper-toggle-swiper-isearch ()
+       "Toggle `swiper' and `swiper-isearch' with the current input."
+       (interactive)
+       (ivy-quit-and-run
+         (if (eq (ivy-state-caller ivy-last) 'swiper-isearch)
+             (swiper ivy-text)
+           (swiper-isearch ivy-text))))
+     (bind-key "<s-return>" #'my-swiper-toggle-swiper-isearch swiper-map)
+
+     (defun my-counsel-find-file-toggle-fzf ()
+       "Toggle `counsel-fzf' with the current `counsel-find-file' input."
+       (interactive)
+       (ivy-quit-and-run
+         (counsel-fzf (or ivy-text "") default-directory)))
+     (bind-key "<C-return>" #'my-counsel-find-file-toggle-fzf counsel-find-file-map)
+
+     (defun my-swiper-toggle-rg-dwim ()
+       "Toggle `rg-dwim' with the current input."
+       (interactive)
+       (ivy-quit-and-run (my-ivy-switch-to-rg-dwim)))
+     (bind-key "<M-return>" #'my-swiper-toggle-rg-dwim swiper-map)
+     (bind-key "<M-return>" #'my-swiper-toggle-rg-dwim counsel-ag-map)
+
+     (defun my-swiper-toggle-swiper-isearch ()
+       "Toggle `swiper' and `swiper-isearch' with the current input."
+       (interactive)
+       (ivy-quit-and-run
+         (if (eq (ivy-state-caller ivy-last) 'swiper-isearch)
+             (my-ivy-switch-to-swiper)
+           (my-ivy-switch-to-swiper-isearch))))
+     (bind-key "<s-return>" #'my-swiper-toggle-swiper-isearch swiper-map)
+
+     ;; More actions
+     (ivy-add-actions
+      'swiper-isearch
+      '(("r" my-ivy-switch-to-counsel-rg "rg")
+        ("d" my-ivy-switch-to-rg-dwim "rg dwim")
+        ("s" my-ivy-switch-to-swiper "swiper")
+        ("a" my-ivy-switch-to-swiper-all "swiper all")))
+
+     (ivy-add-actions
+      'swiper
+      '(("r" my-ivy-switch-to-counsel-rg "rg")
+        ("d" my-ivy-switch-to-rg-dwim "rg dwim")
+        ("s" my-ivy-switch-to-swiper-isearch "swiper isearch")
+        ("a" my-ivy-switch-to-swiper-all "swiper all")))
+
+     (ivy-add-actions
+      'swiper-all
+      '(("g" my-ivy-switch-to-counsel-git-grep "git grep")
+        ("r" my-ivy-switch-to-counsel-rg "rg")
+        ("d" my-ivy-switch-to-rg-dwim "rg dwim")
+        ("s" my-swiper-toggle-swiper-isearch "swiper isearch")
+        ("S" my-ivy-switch-to-swiper "swiper")))
+
+     (ivy-add-actions
+      'counsel-rg
+      '(("s" my-ivy-switch-to-swiper-isearch "swiper isearch")
+        ("S" my-ivy-switch-to-swiper "swiper")
+        ("a" my-ivy-switch-to-swiper-all "swiper all")
+        ("d" my-ivy-switch-to-rg-dwim "rg dwim")))
+
+     (ivy-add-actions
+      'counsel-git-grep
+      '(("s" my-ivy-switch-to-swiper-isearch "swiper isearch")
+        ("S" my-ivy-switch-to-swiper "swiper")
+        ("r" my-ivy-switch-to-rg-dwim "rg")
+        ("d" my-ivy-switch-to-rg-dwim "rg dwim")
+        ("a" my-ivy-switch-to-swiper-all "swiper all")))
+
+     (ivy-add-actions
+      'counsel-find-file
+      '(("g" my-ivy-switch-to-counsel-git "git")
+        ("z" my-ivy-switch-to-counsel-fzf "fzf")))
+
+     (ivy-add-actions
+      'counsel-git
+      '(("f" my-ivy-switch-to-counsel-find-file "find file")
+        ("z" my-ivy-switch-to-counsel-fzf "fzf")))
+
+     (ivy-add-actions
+      'counsel-fzf
+      '(("f" my-ivy-switch-to-counsel-find-file "find file")
+        ("g" my-ivy-switch-to-counsel-git "git")))
+
+     ;; Integration with `projectile'
+     (with-eval-after-load 'projectile
+       (setq projectile-completion-system 'ivy))
+
+     ;; Integration with `magit'
+     (with-eval-after-load 'magit
+       (setq magit-completing-read-function 'ivy-completing-read)))
+
+   ;; Enhance M-x
+   (use-package amx
+     :init (setq amx-history-length 20))
+
+   ;; Better sorting and filtering
+   (use-package prescient
+     :commands prescient-persist-mode
+     :init
+     (setq prescient-filter-method '(literal regexp initialism fuzzy))
+     (prescient-persist-mode 1))
+
+   (use-package ivy-prescient
+     :commands ivy-prescient-re-builder
+     :custom-face
+     (ivy-minibuffer-match-face-1 ((t (:inherit font-lock-doc-face :foreground nil))))
+     :init
+     (defun ivy-prescient-non-fuzzy (str)
+       "Generate an Ivy-formatted non-fuzzy regexp list for the given STR.
+ This is for use in `ivy-re-builders-alist'."
+       (let ((prescient-filter-method '(literal regexp)))
+         (ivy-prescient-re-builder str)))
+
+     (setq ivy-prescient-retain-classic-highlighting t
+           ivy-re-builders-alist
+           '((counsel-ag . ivy-prescient-non-fuzzy)
+             (counsel-rg . ivy-prescient-non-fuzzy)
+             (counsel-pt . ivy-prescient-non-fuzzy)
+             (counsel-grep . ivy-prescient-non-fuzzy)
+             (counsel-imenu . ivy-prescient-non-fuzzy)
+             (counsel-yank-pop . ivy-prescient-non-fuzzy)
+             (swiper . ivy-prescient-non-fuzzy)
+             (swiper-isearch . ivy-prescient-non-fuzzy)
+             (swiper-all . ivy-prescient-non-fuzzy)
+             (lsp-ivy-workspace-symbol . ivy-prescient-non-fuzzy)
+             (lsp-ivy-global-workspace-symbol . ivy-prescient-non-fuzzy)
+             (insert-char . ivy-prescient-non-fuzzy)
+             (counsel-unicode-char . ivy-prescient-non-fuzzy)
+             (t . ivy-prescient-re-builder))
+           ivy-prescient-sort-commands
+           '(:not swiper swiper-isearch ivy-switch-buffer
+             counsel-grep counsel-git-grep counsel-ag counsel-imenu
+             counsel-yank-pop counsel-recentf counsel-buffer-or-recentf))
+
+     (ivy-prescient-mode 1))
+
+   ;; Ivy integration for Projectile
+   (use-package counsel-projectile
+     :ensure t
+     :hook (counsel-mode . counsel-projectile-mode)
+     :init (setq counsel-projectile-grep-initial-input '(ivy-thing-at-point)))
+
+   ;; Select from xref candidates with Ivy
+   (use-package ivy-xref
+     :init
+     (when (boundp 'xref-show-definitions-function)
+       (setq xref-show-definitions-function #'ivy-xref-show-defs))
+     (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
+
+   ;; Tramp ivy interface
+   (use-package counsel-tramp
+     :bind (:map counsel-mode-map
+            ("C-c c T" . counsel-tramp))))
+
+   #+END_SRC
+** Projectile
+   #+BEGIN_SRC emacs-lisp
+(use-package projectile
+  :bind (:map projectile-mode-map
+         ("s-t" . projectile-find-file) ; `cmd-t' or `super-t'
+         ("C-c p" . projectile-command-map))
+  :hook (after-init . projectile-mode)
+  :init
+  (setq projectile-mode-line-prefix ""
+        projectile-sort-order 'recentf
+        projectile-use-git-grep t)
+  :config
+  ;; (projectile-update-mode-line)         ; Update mode-line at the first time
+
+  ;; Use the faster searcher to handle project files: ripgrep `rg'.
+  (when (and (not (executable-find "fd"))
+             (executable-find "rg"))
+    (setq projectile-generic-command
+          (let ((rg-cmd ""))
+            (dolist (dir projectile-globally-ignored-directories)
+              (setq rg-cmd (format "%s --glob '!%s'" rg-cmd dir)))
+            (concat "rg -0 --files --color=never --hidden" rg-cmd)))))
+   #+END_SRC
+** ediff
+   #+BEGIN_SRC emacs-lisp
+(use-package ediff
+  :ensure nil
+  :hook(;; show org ediffs unfolded
+        (ediff-prepare-buffer . outline-show-all)
+        ;; restore window layout when done
+        (ediff-quit . winner-undo))
+  :config
+  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+  (setq ediff-split-window-function 'split-window-horizontally)
+  (setq ediff-merge-split-window-function 'split-window-horizontally))
+   #+END_SRC
+** automatic parenthesis pairing
+   #+BEGIN_SRC
+(use-package elec-pair
+  :ensure nil
+  :hook (after-init . electric-pair-mode)
+  :init (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit))
+   #+END_SRC
+** multiple-cursors
+   #+BEGIN_SRC emacs-lisp
+;; Multiple cursors
+(use-package multiple-cursors
+  :bind (("C-S-c C-S-c"   . mc/edit-lines)
+         ("C->"           . mc/mark-next-like-this)
+         ("C-<"           . mc/mark-previous-like-this)
+         ("C-c C-<"       . mc/mark-all-like-this)
+         ("C-M->"         . mc/skip-to-next-like-this)
+         ("C-M-<"         . mc/skip-to-previous-like-this)
+         ("s-<mouse-1>"   . mc/add-cursor-on-click)
+         ("C-S-<mouse-1>" . mc/add-cursor-on-click)
+         :map mc/keymap
+         ("C-|" . mc/vertical-align-with-space)))
+   #+END_SRC 
+** undo-tree
+   #+BEGIN_SRC emacs-lisp
+;; Treat undo history as a tree
+(use-package undo-tree
+  :diminish
+  :hook (after-init . global-undo-tree-mode)
+  :init
+  (setq undo-tree-visualizer-timestamps t
+        undo-tree-enable-undo-in-region nil
+        undo-tree-auto-save-history nil)
+
+  ;; HACK: keep the diff window
+  (with-no-warnings
+    (make-variable-buffer-local 'undo-tree-visualizer-diff)
+    (setq-default undo-tree-visualizer-diff t)))
+   #+END_SRC
+** ace-window (moving between windows)
+   #+BEGIN_SRC emacs-lisp
+(use-package ace-window
+:init
+(progn
+(global-set-key [remap other-window] 'ace-window)
+(custom-set-faces
+ '(aw-leading-char-face
+   ((t ((:inherit ace-jump-face-foreground :height 3.0)))))
+)))
+   #+END_SRC
+** magit
+   #+BEGIN_SRC emacs-lisp
+(use-package magit
+  :mode (("\\COMMIT_EDITMSG\\'" . text-mode)
+         ("\\MERGE_MSG\\'" . text-mode))
+  :bind (("C-x g" . magit-status)
+         ("C-x M-g" . magit-dispatch)
+         ("C-c M-g" . magit-file-popup))
+  :config
+  (when (fboundp 'transient-append-suffix)
+    ;; Add switch: --tags
+    (transient-append-suffix 'magit-fetch
+      "-p" '("-t" "Fetch all tags" ("-t" "--tags"))))
+
+    ;; don't ask me if I want to save the files or not
+    (setq magit-save-repository-buffers nil)
+  ;; Access Git forges from Magit
+  (when (executable-find "cc")
+    (use-package forge
+      :demand
+      :init (setq forge-topic-list-columns
+                  '(("#" 5 t (:right-align t) number nil)
+                    ("Title" 60 t nil title  nil)
+                    ("State" 6 t nil state nil)
+                    ("Updated" 10 t nill updated nil)))))
+
+  ;; Show TODOs in magit
+  (use-package magit-todos
+  :init
+  (setq magit-todos-nice (if (executable-find "nice") t nil))
+  (magit-todos-mode 1)))
+
+   #+END_SRC
+** highlight-parenthesis
+   #+BEGIN_SRC emacs-lisp
+(use-package paren
+  :hook (after-init . show-paren-mode)
+  :init (setq show-paren-when-point-inside-paren t
+              show-paren-when-point-in-periphery t)
+  :config
+  (with-no-warnings
+    ;; Display matching line for off-screen paren.
+    (defun display-line-overlay (pos str &optional face)
+      "Display line at POS as STR with FACE.
+FACE defaults to inheriting from default and highlight."
+      (let ((ol (save-excursion
+                  (goto-char pos)
+                  (make-overlay (line-beginning-position)
+                                (line-end-position)))))
+        (overlay-put ol 'display str)
+        (overlay-put ol 'face
+                     (or face '(:inherit highlight)))
+        ol))
+
+    (defvar-local show-paren--off-screen-overlay nil)
+    (defun show-paren-off-screen (&rest _args)
+      "Display matching line for off-screen paren."
+      (when (overlayp show-paren--off-screen-overlay)
+        (delete-overlay show-paren--off-screen-overlay))
+      ;; Check if it's appropriate to show match info,
+      (when (and (overlay-buffer show-paren--overlay)
+                 (not (or cursor-in-echo-area
+                          executing-kbd-macro
+                          noninteractive
+                          (minibufferp)
+                          this-command))
+                 (and (not (bobp))
+                      (memq (char-syntax (char-before)) '(?\) ?\$)))
+                 (= 1 (logand 1 (- (point)
+                                   (save-excursion
+                                     (forward-char -1)
+                                     (skip-syntax-backward "/\\")
+                                     (point))))))
+        ;; Rebind `minibuffer-message' called by `blink-matching-open'
+        ;; to handle the overlay display.
+        (cl-letf (((symbol-function #'minibuffer-message)
+                   (lambda (msg &rest args)
+                     (let ((msg (apply #'format-message msg args)))
+                       (setq show-paren--off-screen-overlay
+                             (display-line-overlay
+                              (window-start) msg ))))))
+          (blink-matching-open))))
+    (advice-add #'show-paren-function :after #'show-paren-off-screen)))
+   #+END_SRC
+** treemacs (directory explorer on the left hand side)
+   #+BEGIN_SRC emacs-lisp
+ ;; A tree layout file explorer
+  (use-package treemacs
+    :commands (treemacs-follow-mode
+               treemacs-filewatch-mode
+               treemacs-fringe-indicator-mode
+               treemacs-git-mode)
+    :bind (([f8]        . treemacs)
+           ("M-0"       . treemacs-select-window)
+           ("C-x 1"     . treemacs-delete-other-windows)
+           ("C-x t 1"   . treemacs-delete-other-windows)
+           ("C-x t t"   . treemacs)
+           ("C-x t b"   . treemacs-bookmark)
+           ("C-x t C-t" . treemacs-find-file)
+           ("C-x t M-t" . treemacs-find-tag)
+           :map treemacs-mode-map
+           ([mouse-1]   . treemacs-single-click-expand-action))
+    :config
+    (setq treemacs-collapse-dirs           (if treemacs-python-executable 3 0)
+          treemacs-sorting                 'alphabetic-asc
+          treemacs-follow-after-init       t
+          treemacs-is-never-other-window   t
+          treemacs-silent-filewatch        t
+          treemacs-silent-refresh          t
+          treemacs-width                   30)
+    (add-hook 'treemacs-mode-hook (lambda() (display-line-numbers-mode -1)))
+    :config
+    (treemacs-follow-mode t)
+    (treemacs-filewatch-mode t)
+    (pcase (cons (not (null (executable-find "git")))
+                 (not (null (executable-find "python3"))))
+      (`(t . t)
+       (treemacs-git-mode 'deferred))
+      (`(t . _)
+       (treemacs-git-mode 'simple)))
+
+    ;; Projectile integration
+    (use-package treemacs-projectile
+      :after projectile
+      :bind (:map projectile-command-map
+             ("h" . treemacs-projectile)))
+
+    (use-package treemacs-magit
+      :after magit
+      :commands treemacs-magit--schedule-update
+      :hook ((magit-post-commit
+              git-commit-post-finish
+              magit-post-stage
+              magit-post-unstage)
+             . treemacs-magit--schedule-update))
+
+    (use-package treemacs-persp
+      :after persp-mode
+      :commands treemacs-set-scope-type
+      :init (treemacs-set-scope-type 'Frames)))
+   #+END_SRC
+   
+** Hungry delete
+#+BEGIN_SRC emacs-lisp
+(use-package hungry-delete
+  :diminish
+  :hook (after-init . global-hungry-delete-mode)
+  :config (setq-default hungry-delete-chars-to-skip " \t\f\v"))
+#+END_SRC
+** simpleclip (fixes copy/paste clipboard on macOS)
+#+BEGIN_SRC emacs-lisp
+(use-package simpleclip
+  :ensure t
+  :config
+ (simpleclip-mode 1)
+)
+#+END_SRC
+** Highlight-indent
+#+BEGIN_SRC emacs-lisp
+(use-package highlight-indentation
+:ensure t
+)
+#+END_SRC
+** yaml-mode
+#+BEGIN_SRC emacs-lisp
+(use-package yaml-mode
+:ensure t
+:config (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
+(add-to-list 'auto-mode-alist '("\\.yaml\\'" . yaml-mode))
+)
+#+END_SRC
+

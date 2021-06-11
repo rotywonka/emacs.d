@@ -1,0 +1,1 @@
+("~/fun/airflow-dags/" "~/fun/allocation/" "~/fun/data-science.geospatial.liquids-correction/" "~/fun/LAAllocation/" "~/fun/OKSmoothing/" "~/fun/data-eng.spark-data-processing/" "~/fun/TXAllocation/" "~/fun/MetisConfig/" "~/.oh-my-zsh/" "~/fun/data-eng.spark-notebooks/" "~/fun/ds.documentation/")
